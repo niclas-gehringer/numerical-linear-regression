@@ -6,3 +6,38 @@ The goal is to compute a global regression vector and use it for predictions on 
 ## Setup
 - Create a virtual environment
 - Install dependencies via pip install -r requirements.txt 
+
+
+## Problem statement
+
+The goal of this project is to estimate a global regression vector β
+for a linear model by solving a least squares problem.
+
+Given a data matrix X and target values y, the regression parameters
+are obtained by minimizing
+
+||Xβ − y||².
+
+The estimated parameter vector is then used to generate predictions
+for new input data.
+
+
+## Scope
+
+- The project focuses on linear regression only.
+- Synthetic data is used to allow controlled numerical experiments.
+- The regression problem is solved using numerically stable methods
+  (QR decomposition, SVD).
+- No machine learning frameworks such as scikit-learn are used.
+- The focus is on understanding numerical stability, not on achieving
+  maximum predictive accuracy.
+
+
+## Project goals
+
+The project is considered complete when:
+
+- Synthetic regression data can be generated reproducibly.
+- A global regression vector β can be computed using QR decomposition/SVD.
+- The model can be used to generate predictions for new input data.
+- The numerical behavior of the solution can be analyzed and visualized.
