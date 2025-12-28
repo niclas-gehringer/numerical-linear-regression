@@ -41,3 +41,21 @@ The project is considered complete when:
 - A global regression vector β can be computed using QR decomposition/SVD.
 - The model can be used to generate predictions for new input data.
 - The numerical behavior of the solution can be analyzed and visualized.
+
+
+## Data generation
+
+Synthetic data is generated to allow controlled numerical experiments.
+The target values are constructed according to
+
+y = Xβ_true + ε,
+
+where β_true is a fixed, known parameter vector and ε denotes additive
+Gaussian noise.
+
+Two types of datasets are generated:
+- a well-conditioned design matrix with independent features
+- an ill-conditioned design matrix with strong collinearity
+
+This setup makes it possible to study the numerical behavior and stability
+of different solution methods under controlled conditions.
