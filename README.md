@@ -59,3 +59,20 @@ Two types of datasets are generated:
 
 This setup makes it possible to study the numerical behavior and stability
 of different solution methods under controlled conditions.
+
+## Experiments and Evaluation
+
+The generated data is split into training and test sets using an 80/20 split.
+Model performance is evaluated on the test set using the root mean squared error (RMSE).
+In addition, the estimated regression coefficients are compared to the true parameter
+vector to assess numerical stability.
+
+Two numerical solvers are compared:
+- QR decomposition
+- Singular Value Decomposition (SVD)
+
+For well-conditioned design matrices, both solvers yield identical results, as expected.
+For ill-conditioned problems, truncated SVD (TSVD) is used by discarding small singular
+values below a specified tolerance. This acts as a form of numerical regularization,
+leading to more stable parameter estimates and, in some cases, improved generalization
+performance on the test set.
