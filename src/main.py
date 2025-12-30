@@ -2,43 +2,7 @@ import numpy as np
 import solvers
 import data
 from typing import Optional
-
-def train_test_split(X, y, train_ratio = 0.8):
-    """
-        Split the generated data into train and test sets
-        -------
-        X : ndarray, shape (n, d+1) Design matrix including bias term
-        y : ndarray, shape (n,) Target values
-
-        Returns
-        -------
-        X_train : ndarray, shape (0.8 * n, d)
-        X_test : ndarray, shape (0.2 * n, d)
-
-        y_train : ndarray, shape (0.8 * n,) Target values
-        y_test : ndarray, shape (0.2 * n,) Target values
-
-        """
-
-    n = X.shape[0]
-    k = int(train_ratio * n)
-
-    X_train = X[:k]
-    X_test = X[k:]
-    y_train = y[:k]
-    y_test = y[k:]
-
-    # --- check dimensions --- #
-    if X_train.shape[0] != y_train.shape[0]:
-        raise ValueError(f"X_train has {X_train.shape[0]} rows, but y_train has {y_train.shape[0]} entries")
-
-    if X_test.shape[0] != y_test.shape[0]:
-        raise ValueError(f"X_train has {X_test.shape[0]} rows, but y_train has {y_test.shape[0]} entries")
-
-    if X_train.shape[1] != X_test.shape[1]:
-        raise ValueError(f"Train/test feature mismatch: expected same number of columns, got {X_train.shape[1]} (train) and {X_test.shape[1]} (test).")
-
-    return X_train, X_test, y_train, y_test
+import utils
 
 def run_experiment(
         label: str,
@@ -85,7 +49,7 @@ def run_experiment(
     print(f"Condition number of X: {cond_X:.4e}")
 
     # --- 2) train / test split ---
-    X_train, X_test, y_train, y_test = train_test_split(X, y, train_ratio = train_ratio)
+    X_train, X_test, y_train, y_test = utils.train_test_split(X, y, train_ratio = train_ratio)
 
     # --- 3) Apply models (QR and SVD) ---
     beta_qr = solvers.solve_qr(X_train, y_train)
@@ -122,8 +86,8 @@ if __name__ == "__main__":
     d = 3                   # number of features (excluding bias)
     noise_std = 0.1         # light Gaussian noise
     train_ratio = 0.8       # 80/20 split
-    seed = 43               # reproducibility seed
-    svd_tol = 1e-1            # SVD tolerance handling
+    seed = 42               # reproducibility seed
+    svd_tol = 1e-1          # SVD tolerance handling
 
     # --- Run both scenarios ---
     print("\n=== Well-conditioned dataset ===")
