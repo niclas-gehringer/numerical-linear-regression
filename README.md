@@ -60,6 +60,7 @@ Two types of datasets are generated:
 This setup makes it possible to study the numerical behavior and stability
 of different solution methods under controlled conditions.
 
+
 ## Experiments and Evaluation
 
 The generated data is split into training and test sets using an 80/20 split.
@@ -76,3 +77,32 @@ For ill-conditioned problems, truncated SVD (TSVD) is used by discarding small s
 values below a specified tolerance. This acts as a form of numerical regularization,
 leading to more stable parameter estimates and, in some cases, improved generalization
 performance on the test set.
+
+
+## Analysis and Interpretation
+
+For well-conditioned design matrices, the least squares problem is well-posed.
+In this case, QR decomposition and SVD yield identical regression coefficients,
+since both methods compute the same unique least squares solution.
+
+For ill-conditioned problems with strong collinearity, the regression coefficients
+become highly sensitive to noise in the data. While prediction errors on test data
+can remain small, the estimated parameter vector may deviate significantly from the
+true coefficients. This illustrates that good predictive performance does not
+necessarily imply stable or interpretable model parameters.
+
+Using singular value decomposition allows explicit control over numerical stability.
+By truncating small singular values (truncated SVD), directions associated with
+near-linear dependencies in the design matrix are removed. This reduces parameter
+instability and typically leads to regression coefficients with smaller magnitude.
+
+The experiments demonstrate the trade-off between numerical stability and data fit:
+truncated SVD stabilizes the solution at the cost of a slightly increased approximation
+error. This behavior highlights the role of regularization in ill-conditioned linear
+regression problems.
+
+## Visualization
+
+The numerical behavior of the solvers is visualized by plotting the coefficient norm
+and the test RMSE as a function of the SVD truncation tolerance for ill-conditioned data.
+Generated figures are stored in the `figures/` folder.
